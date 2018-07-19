@@ -1,2 +1,2 @@
 # PDG-Theory
-Repository for theory results 
+Repository for the theory PDG.
