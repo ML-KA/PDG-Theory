@@ -11,9 +11,17 @@
 
 %% Useful packages
 \usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{neuralnetwork}
+\usepackage{sidecap}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
 
 \title{Cheatsheet for Fisher-Rao Metric, Geometry, and Complexity of Neural Networks}
 \author{Sandro Braun, Leander Kurscheidt}
@@ -24,10 +32,58 @@
 \end{abstract}
 \section{Geometry of Deep Rectified Networks}
 
-Lemma 2.1 (Structure in Gradient)
-\begin{align}
-	\sum_{t=0}^{L} \sum_{i \in [k_t], j \in [k_{t+1}]} \frac{\partial O^{L+1}}{\partial W^{t_{ij}}} W^t_{ij} = (L+1)O^{L+1}(x) = \langle \nabla_\theta f_\theta (x), \theta \rangle
-\end{align}
+\subsection{Lemma 2.1}
+
+\begin{lemma}[Structure in Gradients]
+	\begin{align}
+		\sum_{t=0}^{L} \sum_{i \in [k_t], j \in [k_{t+1}]} \frac{\partial O^{L+1}}{\partial W^{t_{ij}}} W^t_{ij} = (L+1)O^{L+1}(x) = \langle \nabla_\theta f_\theta (x), \theta \rangle
+	\end{align}
+\end{lemma}
+
+\subsubsection{Example for Lemma 2.2}
+
+\begin{minipage}{.5\textwidth}
+	\begin{align*}
+		\frac{\partial O^2}{\partial W_1} &= \sigma'(z) O^1W_1 \\
+		\frac{\partial O^2}{\partial W_2} &= \sigma'(z) O^1W_2 \\
+		\text{therefore:} \\
+		\sum_{t=1}^{2} \frac{\partial O^2}{\partial W_t} &= \sigma'(z)(\underbrace{O^1W_1 + O^1W_2}_\text{z}) \\
+															&= \sigma'(z) z
+	\end{align*}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+	\begin{neuralnetwork}[height=2]
+		\newcommand{\nodetextx}[2]{$x_#2$}
+		\newcommand{\nodetexty}[2]{$y_#2$}
+		\inputlayer[count=2, bias=false, title=$O^1$, text=\nodetextx]
+		\outputlayer[count=1, title=$O^2$, text=\nodetexty] \linklayers
+	\end{neuralnetwork}
+\end{minipage}
+
+\subsection{Corollary 2.1}
+
+\subsubsection{Notes}
+\begin{enumerate}
+	\item 
+	\begin{proof}
+		We want to show $\frac{\partial l(f,Y)}{\partial f} = -y \Leftrightarrow yf < 1$. So,
+		\begin{alignat*}{2}
+			                && 1-y_if_i &> 0 \\
+			\Leftrightarrow && l &=1-y_if_i \\
+			\Leftrightarrow && \frac{\partial l}{\partial f} &=-y_i
+		\end{alignat*}
+	  \end{proof}
+	\item 
+	\begin{proof}
+		We want to show $\frac{\partial l(f,Y)}{\partial f} = 0 \Leftrightarrow yf > 1$. So,
+		\begin{alignat*}{2}
+							&& 1-y_if_i &< 0 \\
+			\Leftrightarrow && l &=0 \\
+			\Leftrightarrow && \frac{\partial l}{\partial f} &=0
+		\end{alignat*}
+	  \end{proof}
+\end{enumerate}
+
 
 \begin{figure}
 	\centering
