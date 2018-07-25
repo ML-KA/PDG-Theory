@@ -2,7 +2,7 @@
 
 We meet weekly to discuss theoretical machine learning related papers and methods.
 The setup is whiteboard session and small group style.
-The most important rule: If we cannot derive the thoughts in the paper on the board ourselves, we do no understand them.
+The most important rule: If we cannot derive the thoughts in the paper on the board ourselves, we do not understand them.
 
 
 # Currenlty Reading
