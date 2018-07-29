@@ -46,16 +46,16 @@
 
 \subsubsection{Example for Lemma 2.1}
 
-\begin{minipage}{.5\textwidth}
-	\begin{neuralnetwork}[height=2]
-		\newcommand{\nodetextx}[2]{$x_#2$}
-		\newcommand{\nodetexty}[2]{$y_#2$}
-		\inputlayer[count=2, bias=false, title=$O^0$, text=\nodetextx]
-		\outputlayer[count=1, title=$O^1$, text=\nodetexty] \linklayers
-	\end{neuralnetwork}
-\end{minipage}
+Take a simple feed forward neural network with only two inputs and one output. Remember that by definition $O^0 = x$.
+Illustrated: \\
+\begin{neuralnetwork}[height=2]
+	\newcommand{\nodetextx}[2]{$x_#2$}
+	\newcommand{\nodetexty}[2]{$y_#2$}
+	\inputlayer[count=2, bias=false, title=$O^0$, text=\nodetextx]
+	\outputlayer[count=1, title=$O^1$, text=\nodetexty] \linklayers
+\end{neuralnetwork}
 
-Take a simple feed forward neural network with only two inputs and one output. Remember that by definition $O^0 = x$. The simple example can then be written with
+The simple example can then be written with:
 
 \begin{align}
 	\label{eq_simple_nn}
