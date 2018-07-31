@@ -48,12 +48,17 @@ Every affine transformation can be turned into a linear transformation with a co
 For example the intercept in linear models in statistics is often modeled this way. \\
 We can adapt this trick with only one additional constant input using this matrix:
 \[
-\begin{bmatrix}
+W'=\begin{bmatrix}
     w_{11}       & w_{12} & w_{13} & \dots & w_{1n} & bias_1\\
     w_{21}       & w_{22} & w_{23} & \dots & w_{2n} & bias_2\\
     \hdotsfor{6} \\
 	w_{d1}       & w_{d2} & w_{d3} & \dots & w_{dn} & bias_n\\
 	0 & \hdotsfor{3} & 0 & 1
+\end{bmatrix}
+= 
+\begin{bmatrix}
+    W & & & b\\
+	0 & \dots & 0 & 1
 \end{bmatrix}
 \]\\
 the last line is the difference to the usual construction and should be ommitted in the last layer.\\
