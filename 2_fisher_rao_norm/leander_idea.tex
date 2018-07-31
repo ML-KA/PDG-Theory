@@ -1,0 +1,72 @@
+\documentclass[a4paper]{article}
+
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{neuralnetwork}
+\usepackage{sidecap}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newcommand{\setreal}{\mathbb{R}}
+
+\title{Idea: Adaption of theory to networks with biases}
+\author{Leander Kurscheidt}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+\end{abstract}
+\section{Affine Transformations}
+
+Since our NN "somewhat" resembles linear functions following from the rule $\sigma(x)=\sigma'(x)x$ (i see this rule as separating the linear from the non-linear part),
+i am curious to see whether ideas of affine spaces and how to integrate them into linear-spaces translate.
+
+I think they do.
+
+\section{Idea}
+
+Affine subspaces are usually define via $A=v + U_V$, where $U_V$ is a subspace of $V$ and $v$ is a vector of $V$ (see \href{https://de.wikipedia.org/wiki/Affiner_Unterraum}{(german) wikipedia}). But you can work in them using \href{https://en.wikipedia.org/wiki/Homogeneous_coordinates}{homogenous coordinates}.
+
+Every affine transformation can be turned into a linear transformation with a constant 1-input using the \href{https://en.wikipedia.org/wiki/Augmented_matrix}{Augmented Matrix} trick.\\
+For example the intercept in linear models in statistics is often modeled this way. \\
+We can adapt this trick with only one additional constant input using this matrix:
+\[
+\begin{bmatrix}
+    w_{11}       & w_{12} & w_{13} & \dots & w_{1n} & bias_1\\
+    w_{21}       & w_{22} & w_{23} & \dots & w_{2n} & bias_2\\
+    \hdotsfor{6} \\
+	w_{d1}       & w_{d2} & w_{d3} & \dots & w_{dn} & bias_n\\
+	0 & \hdotsfor{3} & 0 & 1
+\end{bmatrix}
+\]\\
+the last line is the difference to the usual construction and should be ommitted in the last layer.\\
+
+This results in:$f_\theta(x)=f_{\theta'}((x,1))$,\\
+where $\theta'$ is the parameter adpated in the above schema.\\
+
+Usually proofs get a lot simple when you just have to wory about keeping one input constant. I think a lot of the proofs from the paper should still hold, for example Leamma 2.1 doesn't change.\\
+
+For this to work, we need to add the additional requirement that $\sigma(1)=1$
+
+
+\bibliographystyle{alpha}
+\bibliography{sample}
+
+\end{document}
