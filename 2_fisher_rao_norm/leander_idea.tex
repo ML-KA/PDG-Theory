@@ -23,6 +23,8 @@
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
 
 \newcommand{\setreal}{\mathbb{R}}
 
@@ -69,6 +71,51 @@ where $\theta'$ is the parameter adpated in the above schema.\\
 Usually proofs get a lot simple when you just have to wory about keeping one input constant. I think a lot of the proofs from the paper should still hold, for example Leamma 2.1 doesn't change.\\
 
 For this to work, we need to add the additional requirement that $\sigma(1)=1$
+
+\section{Proof}
+
+In the following section, neural networks with biases as defined as:\\
+$f_{\theta}(x)=\sigma_{L+1}(\sigma_L(\dots \sigma_2(\sigma_1(xW^0 + b^0)W^1 + b^1)W^2 +b^2)\dots W^L + b^L)$.\\
+We call $b^i$ bias and additionally need the follwing constraint on the activation function $\sigma_i$:\\
+$\forall i \in {L+1, \dots, 1}. \exists c_i. \sigma_i(c_i)=1$ 
+
+\theoremstyle{definition}
+\begin{definition}{Homogenous Coordinates for Neural Networks}\\
+Let $f_{\theta}$ be a neural network with biases. Then augumented neural network $f'_{\theta'}$ is a neural network as defined in Definition 1, (2.1) in [TODO: ref], where:\\
+$\theta' = (W'^0, \dots, W'^L)$\\
+and\\
+\[
+W'^i=\begin{bmatrix}
+    w_{11}^i       & w_{12}^i & w_{13}^i & \dots & w_{1n}^i & bias_1^i\\
+    w_{21}^i       & w_{22}^i & w_{23}^i & \dots & w_{2n}^i & bias_2^i\\
+    \hdotsfor{6} \\
+	w_{d1}^i       & w_{d2}^i & w_{d3}^i & \dots & w_{dn}^i & bias_n^i\\
+	0 & \hdotsfor{3} & 0 & c_i
+\end{bmatrix}
+= 
+\begin{bmatrix}
+    W^i & & & b^i\\
+	0 & \dots & 0 & c_i
+\end{bmatrix} \in \mathbb{R}^{l_i + 1, h_i + 1}  \forall i \in \{0, \dots L\}
+\]\\
+\[
+W'^i=
+\begin{bmatrix}
+    W^i & b^i
+\end{bmatrix} \in \mathbb{R}^{l_i + 1, h_i}  \text{ with } i = L + 1
+\]
+\end{definition}
+
+\begin{theorem}{Equality of the augumented NN}\\
+For all NN with Bias $f_{\theta'}$:\\
+$f_{\theta'}(x)=f'_{\theta'}((x,1))$
+\end{theorem}
+
+\begin{proof}
+    via Induction over L.\\
+    For $L=0$...\\
+    TODO, but should be pretty trivial
+\end{proof}
 
 
 \bibliographystyle{alpha}
