@@ -65,19 +65,31 @@ W'=\begin{bmatrix}
 \]\\
 the last line is the difference to the usual construction and should be ommitted in the last layer.\\
 
-This results in:$f_\theta(x)=f_{\theta'}((x,1))$,\\
+This results in:$f_\theta(x)=f_{\theta'}()$,\\
 where $\theta'$ is the parameter adpated in the above schema.\\
 
 Usually proofs get a lot simple when you just have to wory about keeping one input constant. I think a lot of the proofs from the paper should still hold, for example Leamma 2.1 doesn't change.\\
 
 For this to work, we need to add the additional requirement that $\sigma(1)=1$
-
+\pagebreak
 \section{Proof}
 
 In the following section, neural networks with biases as defined as:\\
-$f_{\theta}(x)=\sigma_{L+1}(\sigma_L(\dots \sigma_2(\sigma_1(xW^0 + b^0)W^1 + b^1)W^2 +b^2)\dots W^L + b^L)$.\\
+\begin{align*}
+f_{\theta}(x)=\sigma_{L+1}(\sigma_L(\dots \sigma_2(\sigma_1(xW^0 + b^0)W^1 + b^1)W^2 +b^2)\dots W^L + b^L)
+\end{align*}
 We call $b^i$ bias and additionally need the follwing constraint on the activation function $\sigma_i$:\\
-$\forall i \in {L+1, \dots, 1}. \exists c_i. \sigma_i(c_i)=1$ 
+\begin{align*}
+\forall i \in {L+1, \dots, 1}. \exists c_i. \sigma_i(c_i)=1
+\end{align*}
+For $f'_{\theta'}$ with $\theta' = (W'^0, W'^1,\dots, W'^L)$ we define:
+\begin{flalign*}
+            &f'_{\theta'^0}(z) := \sigma_1(zW'^0)\text{, where } \theta'^0 := (W'^0) \\
+            &f'_{\theta'^L} \text{, so that}\\
+            &f'_{\theta'} = f'_{\theta'^L} \circ f'_{\theta'^0} 
+            \text{ and }\\
+            &\theta'^L = (W'^1,\dots, W'^L)
+\end{flalign*}
 
 \theoremstyle{definition}
 \begin{definition}{Homogenous Coordinates for Neural Networks}\\
@@ -96,25 +108,66 @@ W'^i=\begin{bmatrix}
 \begin{bmatrix}
     W^i & & & b^i\\
 	0 & \dots & 0 & c_i
-\end{bmatrix} \in \mathbb{R}^{l_i + 1, h_i + 1}  \forall i \in \{0, \dots L\}
+\end{bmatrix} \in \mathbb{R}^{k_i + 1, k_{i + 1} + 1}  \forall i \in \{0, \dots (L-1)\}
 \]\\
 \[
 W'^i=
 \begin{bmatrix}
     W^i & b^i
-\end{bmatrix} \in \mathbb{R}^{l_i + 1, h_i}  \text{ with } i = L + 1
+\end{bmatrix} \in \mathbb{R}^{k_i + 1, K}  \text{ with } i = L
 \]
 \end{definition}
 
 \begin{theorem}{Equality of the augumented NN}\\
-For all NN with Bias $f_{\theta'}$:\\
-$f_{\theta'}(x)=f'_{\theta'}((x,1))$
+For all NN with Bias $f_{\theta}$:\\
+$f_{\theta}(x)=f'_{\theta'}(\begin{bmatrix}     x\\     1 \end{bmatrix})$
 \end{theorem}
 
 \begin{proof}
     via Induction over L.\\
-    For $L=0$...\\
-    TODO, but should be pretty trivial
+    \begin{enumerate}
+        \item For $L=0$:\\
+        \begin{align}
+            \Theta'&=(W'^0) \\
+            W'^0 &= \begin{bmatrix}
+                W^0 & b^0
+            \end{bmatrix} \text{ because } 0=L \\
+            f'_{\theta'}(\begin{bmatrix}     x\\     1 \end{bmatrix}) &= \sigma_1(\begin{bmatrix}     x\\     1 \end{bmatrix}W'^0) \\
+            &= \sigma_1(\begin{bmatrix}     x\\     1 \end{bmatrix}\begin{bmatrix}
+                W^0 & b^0
+            \end{bmatrix})\\
+            &= \sigma_1(xW^0 + b^0)\\
+            &= f_{\theta}(x)
+        \end{align}
+        \item For $L \rightarrow (L+1)$ holds Theorem 3.1
+        \item $L \rightarrow (L+1)$:\\
+        \begin{align}
+            \theta' &= (W'^0, W'^1,\dots, W'^L) \\
+            W'^{0} &= \begin{bmatrix}
+                W^0 & & & b^0\\
+                0 & \dots & 0 & c_0
+            \end{bmatrix} \text{ because } 0\neq(L+1)\\
+            \\
+            f'_{\theta'^L}(\begin{bmatrix}     x\\     1 \end{bmatrix}) &= \sigma_1(\begin{bmatrix}     x\\     1 \end{bmatrix}W'^0)\\
+            &=\begin{bmatrix}
+                \sigma_1(\begin{bmatrix}     x\\     1 \end{bmatrix}\begin{bmatrix}
+                    W^0 & & & b^0\\
+                \end{bmatrix} + 1*b^0)\\
+                \sigma_1(1*c_0)
+            \end{bmatrix}\\
+            &=\begin{bmatrix}
+                f_{\theta^0}(x)\\
+                1
+            \end{bmatrix}\\
+            f'_{\theta'}(\begin{bmatrix}     x\\     1 \end{bmatrix}) &=(f'_{\theta'^L} \circ f'_{\theta'^0}) (\begin{bmatrix}     x\\     1 \end{bmatrix})\\
+            &= f'_{\theta'^L}(\begin{bmatrix}
+                f_{\theta^0}(x)\\
+                1
+            \end{bmatrix})\\
+            &= (f_{\theta^L} \circ f_{\theta^0})(x)\\
+            &= f'_{\theta}(x)
+        \end{align}
+    \end{enumerate}
 \end{proof}
 
 
