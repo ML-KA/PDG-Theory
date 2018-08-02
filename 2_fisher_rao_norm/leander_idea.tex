@@ -145,7 +145,7 @@ $f'_{\theta}(x)=f_{\theta'}(\begin{bmatrix}x\\1\end{bmatrix})$
             &= \sigma_1(xW^0 + b^0)\\
             &= f_{\theta}(x)
         \end{align}
-        \item For $L \rightarrow (L+1)$ holds Theorem 3.1
+        \item For $L \rightarrow (L+1)$ with $f_{L,\theta'} \rightarrow f_{L,\theta'} \circ f_{0,\theta'^0}$ holds Theorem 3.1
         \item $L \rightarrow (L+1)$:\\
         \begin{align}
             \theta' &= (W'^0, W'^1,\dots, W'^{(L+1)}) \\
@@ -169,8 +169,8 @@ $f'_{\theta}(x)=f_{\theta'}(\begin{bmatrix}x\\1\end{bmatrix})$
             &= f_{\theta'^L}(\begin{bmatrix}
                 f_{\theta^0}(x)\\
                 1
-            \end{bmatrix})\\
-            &= (f_{L,\theta^L} \circ f_{0,\theta^0})(x)\\
+            \end{bmatrix}) & \text{using (12)}\\
+            &= (f_{L,\theta^L} \circ f_{0,\theta^0})(x) & \text{induction hypothesis}\\
             &= f_{\theta}(x)
         \end{align}
     \end{enumerate}
