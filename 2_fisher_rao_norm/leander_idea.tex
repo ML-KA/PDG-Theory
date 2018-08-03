@@ -176,6 +176,25 @@ $f'_{\theta}(x)=f_{\theta'}(\begin{bmatrix}x\\1\end{bmatrix})$
     \end{enumerate}
 \end{proof}
 
+Let $g(x) := \begin{bmatrix}x\\1\end{bmatrix}$ (which is continous). Then, following Theorem 3.1:\\
+For all NN with Bias $f_{\theta}$:$f'_{\theta}=f_{\theta'} \circ g$
+
+\begin{theorem}{Transformation of the Data-Distribution}\\
+Let $P_{data}$ be Data-Distribution, then $P'_{data} = g(P_{data})$ is the transformed Data-Distribution.
+Then:\\
+$E_{x \sim P_{data}}f_{\theta}(x) = E_{x \sim P'_{data}}f_{\theta'}(x)$
+\end{theorem}
+
+\begin{proof}
+    \begin{align}
+        E_{x \sim P_{data}}f_{\theta}(x) &= E_{x \sim P_{data}} (f_{\theta'} \circ g)(x)\\
+        &= E_{x \sim P'_{data}}f_{\theta'}(x)
+    \end{align}
+    (18) follows from \textit{Law of the unconscious statistician}.
+\end{proof}
+
+The Rest of the proofs from the "Fisher-Rao Metric, Geometry ..."-paper should now follow from Theorem 3.1 and 3.2.
+
 
 \bibliographystyle{alpha}
 \bibliography{sample}
