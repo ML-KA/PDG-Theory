@@ -180,7 +180,7 @@ Let $g(x) := \begin{bmatrix}x\\1\end{bmatrix}$ (which is continous). Then, follo
 For all NN with Bias $f_{\theta}$:$f'_{\theta}=f_{\theta'} \circ g$
 
 \begin{theorem}{Transformation of the Data-Distribution}\\
-Let $P_{data}$ be Data-Distribution, then $P'_{data} = g(P_{data})$ is the transformed Data-Distribution.
+Let $P_{data}$ be Data-Distribution, then $P'_{data} = g(P_{data})$ is the transformed Data-Distribution.\footnote{The question now arises: What is the distribution of $P'_{data}$? For this innocent and trivial transformation, the answer is harder than it might seem. It is a degenerate distribution and $P'_{data} \sim \begin{bmatrix}P_{data}\\Dirac\end{bmatrix}$, where $Dirac$ is the Dirac-Distribution.}
 Then:\\
 $E_{x \sim P_{data}}f_{\theta}(x) = E_{x \sim P'_{data}}f_{\theta'}(x)$
 \end{theorem}
