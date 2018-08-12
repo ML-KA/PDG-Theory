@@ -1,0 +1,36 @@
+\newpage
+\section{Notes on Section 4}
+
+\subsubsection{Explaining Lemma 4.1}
+
+From 3.5 in the paper, we had:
+\begin{align}
+	\frac{1}{(L+1)^2} \pqnorm{\theta}{fr}{2} = \E{v^\TT X X^\TT v} = \E{\norm{f_\theta}^2}.
+\end{align}
+For the Frobenius Norm of a Matrix $A$ and a vector $x$ the following holds.
+\begin{align}
+	\frobnorm{A} &\geq \spectralnorm{A} \\
+	\frobnorm{x} &= \lnorm{x} = \spectralnorm{x} \\
+	\spectralnorm{Ax} &\leq \spectralnorm{A} \cdot \lnorm{x} \\
+\end{align}
+It follows.
+\begin{align}
+	\E{\spectralnorm{f_\theta}^2}
+	&= 
+		\E{ \spectralnorm{f_\theta}^2} \\
+	&= 
+		\E{ \spectralnorm{\structuredNN}^{2} } \\
+	&\leq 
+		\E{ \spectralnorm{x}^2 \prod \spectralnorm{D^i(x)}^2 \prod \spectralnorm{W^i}^2 }.
+\end{align}
+Since $W^i$ is independent of the data $x$, it does not have to be inside the expectation.
+\begin{align}
+\frac{1}{(L+1)^2} \frnorm{\theta}^2
+	&=
+		\E{\spectralnorm{f_\theta}^2}  \\	
+	&\leq 
+		\E{ \spectralnorm{x}^2 \prod \spectralnorm{D^i(x)}^2 \prod \spectralnorm{W^i}^2 } \\
+	&=
+		\E{ \lnorm{x}^2 \prod_{t=1}^{L+1} \spectralnorm{D^t(x)}^2 } \prod_{t=0}^{L} \spectralnorm{W^i}^2
+\end{align}
+Now taking the root on both sides reveals Lemma 4.1 and concludes the explainiation.

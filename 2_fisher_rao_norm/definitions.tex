@@ -1,0 +1,21 @@
+\def\basicNN{
+	{
+		\sigma_{L+1}(
+		\sigma_{L}(
+		\cdots 
+		\sigma_{2}(
+		\sigma_1(
+		x^T W^0)
+		W^1)
+		W^2)
+		\cdots)
+		W^L)
+	}
+}
+
+\def\structuredNN{
+	{
+		x^T W^0 D^1(x) W^1 D^2(x) \dots D^L W^L D^{L+1}(x)
+	}
+}
+

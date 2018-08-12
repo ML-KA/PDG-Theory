@@ -5,6 +5,7 @@
 \usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath}
+\usepackage{mlka_math}
 
 %% Sets page size and margins
 \usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
@@ -23,10 +24,19 @@
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{lemma}[theorem]{Lemma}
 
-\newcommand{\setreal}{\mathbb{R}}
+
 
 \title{Cheatsheet for Fisher-Rao Metric, Geometry, and Complexity of Neural Networks}
 \author{Sandro Braun, Leander Kurscheidt}
+
+
+%%% --- commands ---
+
+%network notation with nonlinearities
+\include{definitions}
+
+
+
 
 \begin{document}
 \maketitle
@@ -44,10 +54,11 @@
 	\end{align}
 \end{lemma}
 
-\subsubsection{Example for Lemma 2.1}
+\subsubsection{Example for Lemma 2.1 with single output}
 
 Take a simple feed forward neural network with only two inputs and one output. Remember that by definition $O^0 = x$.
 Illustrated: \\
+
 \begin{neuralnetwork}[height=2]
 	\newcommand{\nodetextx}[2]{$x_#2$}
 	\newcommand{\nodetexty}[2]{$y_#2$}
@@ -105,6 +116,89 @@ Using the relation $\sigma(z) = \sigma'(z)(z)$ reveals \eqref{eq_simple_nn}. The
 
 %\end{minipage}%
 
+\subsubsection{Applying Lemma 2.1 to the network structure}
+
+Lemma 2.1 applied to the network notation leads to the following notation:
+
+\begin{align}
+	\label{eq:lemma2_1}
+	\text{Lemma 2.1} : \sigma(z) &= \sigma'(z) z \\
+	\label{eq:basicNN}
+	\text{Network notation} : f_\theta(x) &= \basicNN \\
+	\label{eq:structuredNN}
+	\text{combined} : f_\theta(x) &= \structuredNN
+\end{align}
+
+\subsubsection{Example for Lemma 2.1 with multiple outputs}
+	Take again a simple neural network consisting of a single layer, hence $L=0$. We will now start from \eqref{eq:basicNN} for $L=0$, then use \eqref{eq:lemma2_1} to get \eqref{eq:structuredNN}.
+	Now assume, w.l.o.g. the network has two inputs and two outputs. We then have
+	\begin{align}
+	O^0 &= 	\begin{bmatrix}
+				O^0_1 \\ 
+				O^0_2
+			\end{bmatrix}, ~
+	O^1 = 	\begin{bmatrix}
+				O^1_1 \\ 
+				O^1_2
+			\end{bmatrix}, ~
+	W^0 = 	\begin{bmatrix}
+				W^0_{1,1}  & W^0_{1,2} \\ 
+				W^0_{2,1}  & W^0_{2,2}
+			\end{bmatrix},	\\
+	\label{eq:2_output_example}
+	O^1 &=
+			\sigma(O^{0^T} W^0) \\
+		&=
+			\sigma(
+			\begin{bmatrix}
+				O^0_1 W^0_{1,1}  + O^0_2 W^0_{1,2} \\
+				O^0_1 W^0_{2,1}  + O^0_2 W^0_{2,2}
+			\end{bmatrix})  \\
+		&= 
+			\begin{bmatrix}
+				\sigma(O^0_1 W^0_{1,1}  + O^0_2 W^0_{1,2}) \\
+				\sigma(O^0_1 W^0_{2,1}  + O^0_2 W^0_{2,2})
+			\end{bmatrix} \\
+		&= 
+			\begin{bmatrix}
+				\sigma(N^1_1) \\
+				\sigma(N^1_2)
+			\end{bmatrix} \\
+	\end{align}
+	For simplicity, we can replace the sum within each vector element with $N^1_i$. Now remember \eqref{eq:lemma2_1} and apply it to \eqref{eq:2_output_example}.
+	\begin{align}
+	O^1 &= 
+			\begin{bmatrix}
+				\sigma(N^1_1) \\
+				\sigma(N^1_2)
+			\end{bmatrix} \\
+		&= 
+			\begin{bmatrix}
+				\sigma'(N^1_1) N^1_1 \\
+				\sigma'(N^1_2) N^1_2
+			\end{bmatrix} \\
+		&=  
+			\begin{bmatrix}
+				N^1_1 & N^1_2
+			\end{bmatrix}	
+			\underbrace{
+				\begin{bmatrix}
+					\sigma'(N^1_1)	&	0\\
+					0				&	\sigma'(N^1_2)
+				\end{bmatrix}
+			}_{D^1(x)} \\
+		&=
+			N^1 D^1(x)		
+	\end{align}
+	The last step is to remember $N^{i+1} = O^{i^\TT}W^1$, then we have
+	\begin{align}
+		O^1 &= 
+				{O^0}^\TT W^0 D^1(x) \\
+			&= 
+				{x}^\TT W^0 D^1(x)
+	\end{align}
+	which is equivalent to inserting $L=0$ to \eqref{eq:structuredNN}. This completes the example.
+	
 
 \subsection{Corollary 2.1}
 
@@ -131,73 +225,95 @@ Using the relation $\sigma(z) = \sigma'(z)(z)$ reveals \eqref{eq_simple_nn}. The
 \end{enumerate}
 
 
-\begin{figure}
+\begin{figure}[htb]
 	\centering
 	\includegraphics[width=\textwidth]{whiteboard_notes/20180706_01.jpg}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[htb]
 	\centering
 \includegraphics[width=\textwidth]{whiteboard_notes/20180706_02.jpg}
 \end{figure}
-\begin{figure}
+\begin{figure}[htb]
 	\centering
 \includegraphics[width=\textwidth]{whiteboard_notes/20180706_03.jpg}
 \end{figure}
-\begin{figure}
+\begin{figure}[htb]
 	\centering
 \includegraphics[width=\textwidth]{whiteboard_notes/20180706_04.jpg}
 \end{figure}
-\begin{figure}
+\begin{figure}[htb]
 	\centering
 \includegraphics[width=\textwidth]{whiteboard_notes/IMG_1583.jpg}
 \end{figure}
-\begin{figure}
+\begin{figure}[htb]
 	\centering
 \includegraphics[width=\textwidth]{whiteboard_notes/3_1_proof.jpg}
 \end{figure}
-\begin{figure}
+
+\begin{figure}[htb]
 	\centering
 \includegraphics[width=\textwidth]{whiteboard_notes/3_1_proof_cont.jpg}
 \end{figure}
-\begin{figure}
+
+\begin{figure}[htb]
 	\centering
 \includegraphics[width=\textwidth]{whiteboard_notes/07.jpg}
 \end{figure}
-\begin{figure}
+
+\begin{figure}[htb]
 	\centering
 \includegraphics[width=\textwidth]{whiteboard_notes/08.jpg}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[htb]
 	\centering
 	\includegraphics[width=\textwidth]{whiteboard_notes/09.jpg}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[htb]
 	\centering
 	\includegraphics[width=\textwidth]{whiteboard_notes/10.jpg}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[htb]
 	\centering
 	\includegraphics[width=\textwidth]{whiteboard_notes/11.jpg}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[htb]
 	\centering
 	\includegraphics[width=\textwidth]{whiteboard_notes/12.jpg}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[htb]
 	\centering
 	\includegraphics[width=\textwidth]{whiteboard_notes/13.jpg}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[htb]
 	\centering
 	\includegraphics[width=\textwidth]{whiteboard_notes/14.jpg}
 \end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=\textwidth]{whiteboard_notes/15.jpg}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=\textwidth]{whiteboard_notes/16.jpg}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=\textwidth]{whiteboard_notes/17.jpg}
+\end{figure}
+
+\include{section4}
+
+
 
 \bibliographystyle{alpha}
 \bibliography{sample}

@@ -1,0 +1,18 @@
+\ProvidesPackage{mlka_math}
+
+\RequirePackage{amsmath}
+
+
+\newcommand{\TT}{\mathrm{T}}
+\newcommand{\setreal}{\mathbb{R}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\pqnorm}[3]{\norm{#1}_{#2}^{#3}}
+\newcommand{\pnorm}[2]{\norm{#1}_{ #2 }}
+
+\newcommand{\E}[1]{\mathrm{E}\!\left\{{#1}\right\}}
+
+\newcommand{\spectralnorm}[1]{\pnorm{#1}{\sigma}}
+\newcommand{\lnorm}[1]{\pnorm{#1}{2}}
+
+\newcommand{\frobnorm}[1]{\pnorm{#1}{F}}
+\newcommand{\frnorm}[1]{\pnorm{#1}{fr}}
