@@ -5,9 +5,16 @@ The setup is whiteboard session and small group style.
 The most important rule: If we cannot derive the thoughts in the paper on the board ourselves, we do not understand them.
 
 
-# Currenlty Reading
+# Future of Theory-PDG (09. October 2018 until X)
 
+* Bayesian NN
+* Statistical Learning Theory
 
-Fisher-Rao Metric, Geometry, and Complexity of Neural Networks
-https://arxiv.org/abs/1711.01530
+# Reading History
+
+* Finished 02. October 2018 - Fisher-Rao Metric, Geometry, and Complexity of Neural Networks
+  https://arxiv.org/abs/1711.01530
+  - [ ] Notes Summary
+  - [ ] some fun experiments
+  - [ ] talk for other ML-KA members
 
